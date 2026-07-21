@@ -1,0 +1,67 @@
+---
+import type { Product } from "../../types/content";
+import ButtonLink from "../ui/ButtonLink.astro";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const linkedOptions = product.purchaseOptions.filter(
+  (option): option is typeof option & { url: string } =>
+    option.active && option.url !== null,
+);
+---
+
+<div class="purchase-options">
+  {linkedOptions.length > 0 ? (
+    <div class="purchase-actions">
+      {linkedOptions.map((option) => (
+        <ButtonLink href={option.url} external>{option.label}</ButtonLink>
+      ))}
+    </div>
+  ) : (
+    <p class="availability">
+      The StarterKit is available on Payhip and Gumroad. Purchase links will be
+      added here once the marketplace URLs are confirmed.
+    </p>
+  )}
+  <div class="purchase-terms">
+    <p>{product.support}</p>
+    <p>{product.updates}</p>
+    <p>{product.refunds}</p>
+  </div>
+</div>
+
+<style>
+  .purchase-options {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .purchase-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .availability {
+    max-width: var(--width-reading);
+    margin: 0;
+    padding: var(--space-5);
+    border-inline-start: 3px solid var(--color-accent);
+    background: var(--color-surface);
+  }
+
+  .purchase-terms {
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--width-reading);
+    color: var(--color-foreground-muted);
+    font-size: var(--text-sm);
+  }
+
+  .purchase-terms p {
+    margin: 0;
+  }
+</style>

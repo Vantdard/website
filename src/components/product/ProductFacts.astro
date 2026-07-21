@@ -1,0 +1,47 @@
+---
+import type { ProductEvidence } from "../../types/content";
+
+interface Props {
+  facts: readonly ProductEvidence[];
+}
+
+const { facts } = Astro.props;
+---
+
+<dl class="facts">
+  {facts.map((fact) => (
+    <div class="fact">
+      <dt>{fact.label}</dt>
+      <dd>{fact.value}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    margin: 0;
+    border-block-start: var(--border-width) solid var(--color-border);
+    border-inline-start: var(--border-width) solid var(--color-border);
+  }
+
+  .fact {
+    min-width: 0;
+    padding: var(--space-5);
+    border-block-end: var(--border-width) solid var(--color-border);
+    border-inline-end: var(--border-width) solid var(--color-border);
+  }
+
+  dt {
+    color: var(--color-foreground-muted);
+    font-size: var(--text-sm);
+  }
+
+  dd {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-xl);
+    font-weight: 750;
+    letter-spacing: -0.025em;
+  }
+</style>

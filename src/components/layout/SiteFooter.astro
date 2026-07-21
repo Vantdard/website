@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+import wordmark from "../../assets/brand/vantdard-wordmark.webp";
+import { primaryNavigation } from "../../data/navigation";
+import { site } from "../../data/site";
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <a class="footer-brand" href="/" aria-label="Vantdard home">
+        <Image
+          src={wordmark}
+          alt="Vantdard"
+          widths={[240, 360, 480]}
+          sizes="9rem"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <p>{site.description}</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <ul>
+        {primaryNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href="/products/express-typescript-starterkit">View the StarterKit</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container copyright"><small>&copy; {year} {site.name}</small></div>
+</footer>
+<style>
+  .site-footer { border-block-start: var(--border-width) solid var(--color-border); padding-block: var(--space-7) var(--space-5); }
+  .footer-inner { display: grid; gap: var(--space-6); }
+  .footer-brand { display: inline-flex; width: fit-content; align-items: center; }
+  .footer-brand :global(img) { display: block; width: 9rem; height: auto; }
+  p { margin-block: var(--space-3) 0; color: var(--color-foreground-muted); }
+  ul { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  nav a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  .copyright { margin-block-start: var(--space-6); padding-block-start: var(--space-4); border-block-start: var(--border-width) solid var(--color-border); color: var(--color-foreground-muted); }
+  @media (min-width: 48rem) { .footer-inner { grid-template-columns: minmax(0, 1fr) auto; align-items: start; } }
+</style>

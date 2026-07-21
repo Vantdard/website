@@ -1,0 +1,25 @@
+---
+import ProductCard from "../../components/product/ProductCard.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
+import { products } from "../../data/products";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Software products | Vantdard"
+  description="Focused, production-ready software foundations for developers who value clarity, maintainability and engineering discipline."
+  canonicalPath="/products">
+  <header class="container page-intro">
+    <p class="eyebrow">Vantdard products</p>
+    <h1>Focused foundations for maintainable software.</h1>
+    <p>Vantdard products provide tested, documented starting points for developers who want clarity without unnecessary architectural lock-in.</p>
+  </header>
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading eyebrow="Product catalog" title="Available products"
+        description="Each product addresses a defined engineering problem and states clearly what it includes." />
+      <div class="product-grid">{products.map((product) => <ProductCard product={product} />)}</div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); gap: var(--space-5); }
+</style>

@@ -1,0 +1,21 @@
+---
+import ButtonLink from "../components/ui/ButtonLink.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Page not found | Vantdard" description="The page you requested does not exist or may have moved."
+  canonicalPath="/404" robots="noindex, follow">
+  <section class="container not-found">
+    <p class="eyebrow">404</p>
+    <h1>Page not found.</h1>
+    <p class="lede">The page you requested does not exist or may have moved.</p>
+    <div class="actions">
+      <ButtonLink href="/">Return home</ButtonLink>
+      <ButtonLink href="/products" variant="secondary">View products</ButtonLink>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .not-found { display: grid; align-content: center; min-height: 65vh; padding-block: var(--section-space); }
+  .eyebrow { margin-block-end: var(--space-3); color: var(--color-accent); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.08em; }
+  .actions { margin-block-start: var(--space-6); }
+</style>

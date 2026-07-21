@@ -1,0 +1,38 @@
+@import "./tokens.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); scroll-behavior: smooth; }
+body { margin: 0; min-width: 20rem; min-height: 100vh; font-size: var(--text-base); line-height: 1.65; }
+body, h1, h2, h3, p, li { overflow-wrap: break-word; }
+h1, h2, h3, p { margin-block-start: 0; }
+h1, h2, h3 { line-height: 1.1; text-wrap: balance; }
+h1 { max-width: 20ch; margin-block-end: var(--space-5); font-size: var(--text-2xl); letter-spacing: -0.035em; }
+p { max-width: 65ch; }
+a { color: inherit; text-underline-offset: 0.2em; }
+a:hover { color: var(--color-accent-hover); }
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+::selection { background: var(--color-selection); }
+.container { width: min(100% - (2 * var(--page-gutter)), var(--width-content)); margin-inline: auto; }
+.section { padding-block: var(--section-space); }
+.section + .section { border-block-start: var(--border-width) solid var(--color-border); }
+.section--surface { background: var(--color-surface); }
+.page-intro { max-width: var(--width-reading); padding-block: clamp(var(--space-8), 10vw, var(--space-10)); }
+.page-intro .eyebrow, .hero .eyebrow, .product-header .eyebrow {
+  margin-block-end: var(--space-3); color: var(--color-accent); font-family: var(--font-mono);
+  font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.page-intro > p, .lede { margin-block-end: 0; color: var(--color-foreground-muted); font-size: var(--text-lg); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+.skip-link {
+  position: fixed; z-index: 10; inset-block-start: var(--space-3); inset-inline-start: var(--space-3);
+  padding: var(--space-3) var(--space-4); translate: 0 -200%; background: var(--color-foreground); color: var(--color-background);
+}
+.skip-link:focus { translate: 0; }
+@media (max-width: 29.99rem) {
+  .actions { align-items: stretch; }
+  .actions > * { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}

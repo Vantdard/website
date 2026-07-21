@@ -1,0 +1,198 @@
+---
+import { Image } from "astro:assets";
+import automatedTests from "../../assets/products/starterkit/Automated_Tests.png";
+import commercialPackage from "../../assets/products/starterkit/Commercial_Package.png";
+import cover from "../../assets/products/starterkit/cover.png";
+import documentation from "../../assets/products/starterkit/Documentation.png";
+import healthEndpoint from "../../assets/products/starterkit/Health_Endpoint.png";
+import installation from "../../assets/products/starterkit/Installation.png";
+import projectStructure from "../../assets/products/starterkit/Project_Structure.png";
+import successfulBuild from "../../assets/products/starterkit/Successful Build.png";
+import ProductFacts from "../../components/product/ProductFacts.astro";
+import ProductScreenshot from "../../components/product/ProductScreenshot.astro";
+import PurchaseOptions from "../../components/product/PurchaseOptions.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
+import { getProductBySlug } from "../../data/products";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { ProductEvidence } from "../../types/content";
+const product = getProductBySlug("express-typescript-starterkit");
+if (!product) throw new Error("The Express + TypeScript StarterKit product data is missing.");
+const headerFacts = [
+  { label: "Price", value: `${product.price.currency} ${product.price.amount.toFixed(2)}` },
+  { label: "Payment", value: "One-time" },
+  ...product.evidence,
+] satisfies readonly ProductEvidence[];
+---
+<BaseLayout {...product.seo}>
+  <header class="product-header">
+    <div class="container">
+      <div class="product-header__copy">
+        <div>
+          <p class="eyebrow">Backend StarterKit</p>
+          <h1>{product.name}</h1>
+          <p class="lede">{product.description}</p>
+          <p class="license">{product.licenseSummary}</p>
+        </div>
+        <ProductFacts facts={headerFacts} />
+      </div>
+      <figure class="product-cover">
+        <Image
+          src={cover}
+          alt="Cover of the Production-Ready Express + TypeScript StarterKit"
+          widths={[640, 960, 1280, 1536]}
+          sizes="(min-width: 72rem) 72rem, 100vw"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </header>
+
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Technical foundation"
+        title="What is already in place"
+        description="A defined set of backend, testing, quality and workflow tools."
+      />
+      <div class="foundation-layout">
+        <ul class="feature-grid">{product.includes.map((item) => <li>{item}</li>)}</ul>
+        <ProductScreenshot
+          src={projectStructure}
+          alt="VS Code showing the StarterKit folders, configuration files and README"
+          caption="The project structure and core configuration are visible from the start."
+        />
+      </div>
+      <div class="single-visual">
+        <ProductScreenshot
+          src={documentation}
+          alt="StarterKit README documentation open side by side in VS Code"
+          caption="The included documentation covers setup, usage and verification."
+          sizes="(min-width: 72rem) 72rem, 100vw"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container comparison-layout">
+      <div>
+        <SectionHeading
+          eyebrow="Included"
+          title="A configured backend foundation."
+          description="The StarterKit includes development tooling, automated testing, continuous integration, documentation and an individual commercial license."
+        />
+        <ProductScreenshot
+          src={commercialPackage}
+          alt="Commercial StarterKit package showing its delivered folders and configuration files"
+          caption="The delivered commercial package and its project files."
+        />
+      </div>
+      <div>
+        <h2>What it does not include</h2>
+        <p>The StarterKit is a backend foundation, not a complete SaaS application.</p>
+        <ul class="exclusion-list">{product.excludes.map((item) => <li>{item}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Setup and runtime"
+        title="From installation to a running health endpoint."
+        description="The included project can be installed through its documented workflow and exposes a health endpoint for basic runtime verification."
+      />
+      <div class="visual-pair">
+        <ProductScreenshot
+          src={installation}
+          alt="Terminal showing the StarterKit dependencies installed successfully"
+          caption="Dependencies installed through the documented project setup."
+        />
+        <ProductScreenshot
+          src={healthEndpoint}
+          alt="Browser showing a successful JSON response from the StarterKit health endpoint"
+          caption="The health endpoint returning a successful response."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Verification"
+        title="Tests and build evidence."
+        description="The automated test suite and TypeScript build provide direct verification of the included foundation."
+      />
+      <div class="visual-pair">
+        <ProductScreenshot
+          src={automatedTests}
+          alt="Terminal showing all 33 StarterKit automated tests passing"
+          caption="33 automated tests passing with Vitest."
+        />
+        <ProductScreenshot
+          src={successfulBuild}
+          alt="Terminal showing the StarterKit TypeScript build completing successfully"
+          caption="The TypeScript build completing successfully."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container positioning">
+      <SectionHeading
+        eyebrow="Product positioning"
+        title="Designed for application-specific decisions"
+        description="The StarterKit provides the shared engineering foundation while leaving authentication, persistence, payments and product-specific architecture to the project."
+      />
+    </div>
+  </section>
+
+  <section class="section" id="purchase">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Purchase"
+        title="Choose your marketplace"
+        description="The same product is available through Payhip and Gumroad for USD 19.99 as a one-time purchase."
+      />
+      <PurchaseOptions product={product} />
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .product-header { padding-block: clamp(var(--space-8), 8vw, var(--space-10)); }
+  .product-header__copy { display: grid; gap: var(--space-7); }
+  .product-header h1 { font-size: var(--text-hero); }
+  .license { margin-block: var(--space-5) 0; color: var(--color-foreground-muted); font-size: var(--text-sm); font-weight: 650; }
+  .product-cover { margin: var(--space-8) 0 0; overflow: hidden; border: var(--border-width) solid var(--color-border-strong); background: #090b0e; }
+  .product-cover :global(img) { display: block; width: 100%; height: auto; }
+  .foundation-layout, .comparison-layout, .visual-pair { display: grid; gap: var(--space-7); }
+  .feature-grid, .exclusion-list { margin: 0; padding: 0; list-style: none; }
+  .feature-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    align-self: start; border-block-start: var(--border-width) solid var(--color-border);
+    border-inline-start: var(--border-width) solid var(--color-border);
+  }
+  .feature-grid li {
+    padding: var(--space-4); border-block-end: var(--border-width) solid var(--color-border);
+    border-inline-end: var(--border-width) solid var(--color-border); font-weight: 650;
+  }
+  .single-visual { margin-block-start: var(--space-7); }
+  .comparison-layout > div:first-child :global(.section-heading), .positioning :global(.section-heading) { margin-block-end: var(--space-6); }
+  .comparison-layout h2 { margin-block-end: var(--space-4); font-size: var(--text-xl); }
+  .comparison-layout > div > p { color: var(--color-foreground-muted); }
+  .exclusion-list { margin-block-start: var(--space-5); border-block-start: var(--border-width) solid var(--color-border); }
+  .exclusion-list li { padding-block: var(--space-3); border-block-end: var(--border-width) solid var(--color-border); }
+  .exclusion-list li::before {
+    content: "Not included"; display: inline-block; min-width: 7.5rem; margin-inline-end: var(--space-3);
+    color: var(--color-foreground-muted); font-family: var(--font-mono); font-size: var(--text-xs);
+  }
+  .positioning { max-width: var(--width-reading); margin-inline: auto; }
+  @media (min-width: 48rem) {
+    .product-header__copy { grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr); align-items: end; }
+    .foundation-layout { grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1.2fr); align-items: center; }
+    .comparison-layout, .visual-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

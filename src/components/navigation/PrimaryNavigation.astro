@@ -1,0 +1,52 @@
+﻿---
+import { primaryNavigation } from "../../data/navigation";
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav aria-label="Primary navigation">
+  <ul class="navigation-list">
+    {
+      primaryNavigation.map((item) => {
+        const isCurrent =
+          currentPath === item.href || currentPath.startsWith(`${item.href}/`);
+
+        return (
+          <li>
+            <a href={item.href} aria-current={isCurrent ? "page" : undefined}>
+              {item.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<style>
+  .navigation-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--color-foreground-muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  a:hover,
+  a[aria-current="page"] {
+    color: var(--color-foreground);
+  }
+</style>
+
