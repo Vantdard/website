@@ -1,103 +1,86 @@
-import cover from "../assets/products/starterkit/cover.png";
+import expressionsCover from "../assets/products/cute-animals-expressions/Cover.png";
+import starterkitCover from "../assets/products/starterkit/cover.png";
 import type { Product } from "../types/content";
 
 export const products = [
   {
+    kind: "software",
+    categoryId: "software",
     slug: "express-typescript-starterkit",
     name: "Production-Ready Express + TypeScript StarterKit",
     shortName: "Express + TypeScript StarterKit",
-    shortDescription:
-      "A focused backend foundation built with Express and TypeScript, with validation, automated testing, code-quality tooling and documentation already in place.",
-    description:
-      "A focused Express and TypeScript backend foundation with validation, automated testing, code-quality tooling, continuous integration and documentation.",
-    price: {
-      amount: 19.99,
-      currency: "USD",
-      paymentModel: "one-time",
-    },
+    cardLabel: "Software · Backend StarterKit",
+    cardActionLabel: "View the StarterKit",
+    shortDescription: "A focused backend foundation built with Express and TypeScript, with validation, automated testing, code-quality tooling and documentation already in place.",
+    description: "A focused Express and TypeScript backend foundation with validation, automated testing, code-quality tooling, continuous integration and documentation.",
+    audience: "Developers who want a tested, documented backend foundation while retaining control over application-specific architecture.",
+    price: { amount: 19.99, currency: "USD", paymentModel: "one-time" },
     status: "available",
     featured: true,
     technologies: ["Express", "TypeScript", "Zod", "Vitest", "Supertest"],
     features: [
-      { name: "Express", category: "runtime" },
-      { name: "TypeScript", category: "runtime" },
-      { name: "Zod", category: "validation" },
-      { name: "Vitest", category: "testing" },
-      { name: "Supertest", category: "testing" },
-      { name: "ESLint", category: "quality" },
-      { name: "Prettier", category: "quality" },
-      { name: "GitHub Actions", category: "automation" },
+      { name: "Express", category: "runtime" }, { name: "TypeScript", category: "runtime" },
+      { name: "Zod", category: "validation" }, { name: "Vitest", category: "testing" },
+      { name: "Supertest", category: "testing" }, { name: "ESLint", category: "quality" },
+      { name: "Prettier", category: "quality" }, { name: "GitHub Actions", category: "automation" },
       { name: "VS Code configuration", category: "developer-experience" },
       { name: "Documentation", category: "documentation" },
       { name: "Individual commercial license", category: "license" },
     ],
-    evidence: [
-      { label: "Automated tests", value: "33" },
-      { label: "Test coverage", value: "97.7%" },
-    ],
-    includes: [
-      "Express",
-      "TypeScript",
-      "Zod",
-      "Vitest",
-      "Supertest",
-      "ESLint",
-      "Prettier",
-      "GitHub Actions",
-      "VS Code configuration",
-      "Documentation",
-      "33 automated tests",
-      "97.7% test coverage",
-      "Individual commercial license",
-    ],
-    excludes: [
-      "Authentication",
-      "Database",
-      "ORM",
-      "Payments",
-      "Frontend",
-      "Complete SaaS functionality",
-    ],
+    evidence: [{ label: "Automated tests", value: "33" }, { label: "Test coverage", value: "97.7%" }],
+    includes: ["Express", "TypeScript", "Zod", "Vitest", "Supertest", "ESLint", "Prettier", "GitHub Actions", "VS Code configuration", "Documentation", "33 automated tests", "97.7% test coverage", "Individual commercial license"],
+    excludes: ["Authentication", "Database", "ORM", "Payments", "Frontend", "Complete SaaS functionality"],
     purchaseOptions: [
-      {
-        marketplace: "payhip",
-        label: "Buy on Payhip",
-        url: null,
-        active: true,
-      },
-      {
-        marketplace: "gumroad",
-        label: "Buy on Gumroad",
-        url: null,
-        active: true,
-      },
+      { marketplace: "payhip", label: "Buy on Payhip", url: "https://payhip.com/b/v1azJ", active: true },
+      { marketplace: "gumroad", label: "Buy on Gumroad", url: "https://vantdard.gumroad.com/l/express-typescript-starterkit", active: true },
     ],
-    support:
-      "Support is handled through the marketplace where the product was purchased.",
-    updates:
-      "Product updates, when available, are delivered through the marketplace where the purchase was made.",
-    refunds:
-      "Purchases are subject to the refund terms of the selected marketplace.",
+    availabilityMessage: "The StarterKit is available through Payhip and Gumroad.",
+    support: "Support is handled through the marketplace where the product was purchased.",
+    updates: "Product updates, when available, are delivered through the marketplace where the purchase was made.",
+    refunds: "Purchases are subject to the refund terms of the selected marketplace.",
     licenseSummary: "Includes an individual commercial license.",
-    image: {
-      src: cover,
-      alt: "Cover of the Production-Ready Express + TypeScript StarterKit",
-      width: cover.width,
-      height: cover.height,
-    },
-    seo: {
-      title:
-        "Production-Ready Express + TypeScript StarterKit | Vantdard",
-      description:
-        "A tested Express and TypeScript backend foundation with Zod, Vitest, Supertest, 33 automated tests and 97.7% test coverage.",
-      canonicalPath: "/products/express-typescript-starterkit",
-      ogType: "product",
-    },
+    image: { src: starterkitCover, alt: "Cover of the Production-Ready Express + TypeScript StarterKit", width: starterkitCover.width, height: starterkitCover.height },
+    seo: { title: "Production-Ready Express + TypeScript StarterKit | Vantdard", description: "A tested Express and TypeScript backend foundation with Zod, Vitest, Supertest, 33 automated tests and 97.7% test coverage.", canonicalPath: "/products/express-typescript-starterkit", ogType: "product" },
+  },
+  {
+    kind: "digital-asset-collection",
+    categoryId: "digital-products",
+    family: { slug: "cute-animals", name: "Cute Animals" },
+    slug: "cute-animals-expressions",
+    name: "Cute Animals — Expressions",
+    shortName: "Cute Animals — Expressions",
+    cardLabel: "Digital Products · Cute Animals",
+    cardActionLabel: "Explore Expressions",
+    shortDescription: "A collection of 45 ready-to-use animal illustrations across nine characters and five expressive poses.",
+    description: "Nine adorable animal characters, each illustrated in five expressions for creative projects, content and finished products.",
+    audience: "Creators, designers and small businesses that need adorable animal illustrations ready to incorporate into their own creative projects, content or products.",
+    price: { amount: 4.99, currency: "USD", paymentModel: "one-time" },
+    licenseOptions: [
+      { use: "personal", name: "Personal Use", price: { amount: 4.99, currency: "USD", paymentModel: "one-time" }, summary: "For personal creative projects and content." },
+      { use: "commercial", name: "Commercial Use", price: { amount: 9.99, currency: "USD", paymentModel: "one-time" }, summary: "For creating final products intended for sale." },
+    ],
+    status: "available",
+    featured: false,
+    technologies: [],
+    features: [
+      { name: "9 animals", category: "content" }, { name: "5 expressions per animal", category: "content" },
+      { name: "45 illustrations", category: "content" }, { name: "PNG", category: "format" },
+      { name: "JPG", category: "format" }, { name: "WEBP", category: "format" },
+    ],
+    evidence: [{ label: "Animals", value: "9" }, { label: "Expressions each", value: "5" }, { label: "Illustrations", value: "45" }],
+    includes: ["Capybara", "Cat", "Dog", "Duck", "Fox", "Frog", "Koala", "Panda", "Rabbit"],
+    excludes: ["Reselling original files", "Redistributing or sharing original files", "Sublicensing original files", "Versions that function essentially as substitutes for the original assets"],
+    purchaseOptions: [{ marketplace: "payhip", label: "Buy on Payhip", url: "https://payhip.com/b/lJW7v", active: true }],
+    availabilityMessage: "Cute Animals — Expressions is available through Payhip.",
+    support: "Support is limited to problems with the delivered files.",
+    updates: "No product updates are promised.",
+    refunds: "Refunds are handled according to Payhip's applicable terms.",
+    licenseSummary: "Available with Personal Use and Commercial Use license options.",
+    image: { src: expressionsCover, alt: "Cute Animals — Expressions collection cover showing illustrated animal characters", width: expressionsCover.width, height: expressionsCover.height },
+    seo: { title: "Cute Animals — Expressions | Vantdard", description: "A collection of 45 animal illustrations featuring nine animals and five expressions, delivered in PNG, JPG and WEBP formats.", canonicalPath: "/products/cute-animals-expressions", ogType: "product" },
   },
 ] as const satisfies readonly Product[];
 
 export const featuredProduct = products.find((product) => product.featured);
-
-export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((product) => product.slug === slug);
-}
+export function getProductBySlug(slug: string): Product | undefined { return products.find((product) => product.slug === slug); }
+export function getProductsByCategory(categoryId: Product["categoryId"]): readonly Product[] { return products.filter((product) => product.categoryId === categoryId); }

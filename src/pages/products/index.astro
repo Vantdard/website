@@ -1,25 +1,10 @@
 ---
-import ProductCard from "../../components/product/ProductCard.astro";
+import ButtonLink from "../../components/ui/ButtonLink.astro";
 import SectionHeading from "../../components/ui/SectionHeading.astro";
-import { products } from "../../data/products";
+import { productCategories } from "../../data/categories";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Software products | Vantdard"
-  description="Focused, production-ready software foundations for developers who value clarity, maintainability and engineering discipline."
-  canonicalPath="/products">
-  <header class="container page-intro">
-    <p class="eyebrow">Vantdard products</p>
-    <h1>Focused foundations for maintainable software.</h1>
-    <p>Vantdard products provide tested, documented starting points for developers who want clarity without unnecessary architectural lock-in.</p>
-  </header>
-  <section class="section section--surface">
-    <div class="container">
-      <SectionHeading eyebrow="Product catalog" title="Available products"
-        description="Each product addresses a defined engineering problem and states clearly what it includes." />
-      <div class="product-grid">{products.map((product) => <ProductCard product={product} />)}</div>
-    </div>
-  </section>
+<BaseLayout title="Products | Vantdard" description="Explore the current Vantdard product categories across Software and Digital Products." canonicalPath="/products">
+<header class="container page-intro"><p class="eyebrow">Vantdard ecosystem</p><h1>Explore products by category.</h1><p>Each category organizes products with a related purpose while remaining part of the same Vantdard ecosystem.</p></header>
+<section class="category-section"><div class="container"><SectionHeading eyebrow="Current categories" title="Choose an area to explore" description="Only categories with real, available products are shown."/><div class="category-grid">{productCategories.map((category)=><article class="category-card"><div><p class="category-index">0{category.order}</p><h2>{category.name}</h2><p class="category-description">{category.description}</p></div><ButtonLink href={`/products/${category.slug}`}>Explore {category.name}</ButtonLink></article>)}</div></div></section>
 </BaseLayout>
-<style>
-  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); gap: var(--space-5); }
-</style>

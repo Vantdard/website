@@ -2,18 +2,23 @@ import type { BrandPrinciple } from "../types/brand";
 
 export const brandPrinciples = [
   {
-    title: "Engineering-first",
+    title: "Quality",
     description:
-      "Testing, validation, code quality and maintainability are treated as part of the foundation.",
+      "Every Vantdard product must reach a standard that justifies carrying the brand.",
   },
   {
-    title: "Fewer decisions",
+    title: "Clarity",
     description:
-      "Essential tooling is configured so developers can focus on the application-specific choices that matter.",
+      "Products are presented honestly and designed to be understood without unnecessary complexity.",
   },
   {
-    title: "Built for long-term projects",
+    title: "Reliability",
     description:
-      "The foundation prioritizes readable structure and maintainable tooling over unnecessary architectural lock-in.",
+      "The delivered experience is expected to remain consistent with what the product promises.",
+  },
+  {
+    title: "Built to evolve",
+    description:
+      "Products are created with maintenance, improvement and responsible growth in mind.",
   },
 ] as const satisfies readonly BrandPrinciple[];

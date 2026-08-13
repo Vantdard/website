@@ -1,0 +1,20 @@
+---
+import ProductCard from "../../components/product/ProductCard.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
+import { productCategories } from "../../data/categories";
+import { getProductsByCategory } from "../../data/products";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { ProductCategory } from "../../types/content";
+
+export function getStaticPaths() {
+  return productCategories.map((category) => ({ params: { category: category.slug }, props: { category } }));
+}
+interface Props { category: ProductCategory; }
+const { category } = Astro.props;
+const categoryProducts = getProductsByCategory(category.id);
+---
+<BaseLayout title={`${category.name} products | Vantdard`} description={category.description} canonicalPath={`/products/${category.slug}`}>
+<header class="category-header"><div class="container"><p class="breadcrumb"><a href="/products">Products</a><span aria-hidden="true">/</span>{category.name}</p><p class="eyebrow">Vantdard category</p><h1>{category.name}</h1><p class="lede">{category.description}</p></div></header>
+<section class="section section--surface"><div class="container"><SectionHeading eyebrow="Products" title={`Explore ${category.name}`} description={`${categoryProducts.length} ${categoryProducts.length===1?"product is":"products are"} currently available in this category.`}/><div class="product-list">{categoryProducts.map((product)=><ProductCard product={product} emphasis="featured"/>)}</div></div></section>
+</BaseLayout>
+<style>.category-header{padding-block:clamp(var(--space-8),8vw,var(--space-10))}.breadcrumb{display:flex;gap:var(--space-2);margin-block-end:var(--space-7);color:var(--color-foreground-muted);font-size:var(--text-sm)}.category-header h1{font-size:var(--text-hero)}.product-list{display:grid;gap:var(--space-7)}</style>

@@ -1,149 +1,20 @@
 ---
 import { Image } from "astro:assets";
-import automatedTests from "../assets/products/starterkit/Automated_Tests.png";
-import cover from "../assets/products/starterkit/cover.png";
-import documentation from "../assets/products/starterkit/Documentation.png";
-import projectStructure from "../assets/products/starterkit/Project_Structure.png";
-import ProductCard from "../components/product/ProductCard.astro";
-import ProductFacts from "../components/product/ProductFacts.astro";
-import ProductScreenshot from "../components/product/ProductScreenshot.astro";
+import starterkitCover from "../assets/products/starterkit/cover.png";
 import BrandPrinciples from "../components/sections/BrandPrinciples.astro";
 import ButtonLink from "../components/ui/ButtonLink.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
-import { featuredProduct } from "../data/products";
+import { productCategories } from "../data/categories";
+import { getProductsByCategory } from "../data/products";
 import { site } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import type { ProductEvidence } from "../types/content";
-if (!featuredProduct) throw new Error("A featured product is required for the homepage.");
-const featuredFacts = [
-  { label: "Price", value: `${featuredProduct.price.currency} ${featuredProduct.price.amount.toFixed(2)}` },
-  { label: "Payment", value: "One-time" },
-  ...featuredProduct.evidence,
-] satisfies readonly ProductEvidence[];
 ---
-<BaseLayout title="Vantdard — Production-ready software foundations" description={site.description} canonicalPath="/">
-  <section class="hero">
-    <div class="container hero__inner">
-      <div>
-        <p class="eyebrow">Software foundations for developers</p>
-        <h1>Build on a foundation made for the long term.</h1>
-        <p class="lede">{site.description}</p>
-        <div class="actions hero__actions">
-          <ButtonLink href="/products/express-typescript-starterkit">View the StarterKit</ButtonLink>
-          <ButtonLink href="/products" variant="secondary">Browse products</ButtonLink>
-        </div>
-      </div>
-      <figure class="hero__visual">
-        <Image
-          src={cover}
-          alt="Cover of the Production-Ready Express + TypeScript StarterKit"
-          widths={[640, 960, 1280, 1536]}
-          sizes="(min-width: 64rem) 42vw, 100vw"
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="featured-product-title">
-    <div class="container featured-layout">
-      <div>
-        <p class="eyebrow">Featured product</p>
-        <h2 id="featured-product-title">{featuredProduct.name}</h2>
-        <p class="lede">{featuredProduct.shortDescription}</p>
-        <div class="actions"><ButtonLink href={`/products/${featuredProduct.slug}`}>Explore the product</ButtonLink></div>
-      </div>
-      <ProductFacts facts={featuredFacts} />
-    </div>
-  </section>
-
-  <section class="section section--surface">
-    <div class="container">
-      <SectionHeading eyebrow="Technical evidence" title="A tested, documented starting point."
-        description="The foundation brings essential backend tooling together without claiming to be a complete application." />
-      <dl class="evidence-list">
-        <div><dt>Foundation</dt><dd>Express, TypeScript and Zod</dd></div>
-        <div><dt>Testing</dt><dd>Vitest, Supertest, 33 automated tests and 97.7% test coverage</dd></div>
-        <div><dt>Code quality</dt><dd>ESLint and Prettier</dd></div>
-        <div><dt>Workflow</dt><dd>GitHub Actions and VS Code configuration</dd></div>
-        <div><dt>Delivery</dt><dd>Documentation and an individual commercial license</dd></div>
-      </dl>
-      <div class="evidence-visuals">
-        <ProductScreenshot src={projectStructure}
-          alt="VS Code showing the StarterKit project structure and README"
-          caption="A visible project structure and documented foundation." />
-        <ProductScreenshot src={automatedTests}
-          alt="Terminal showing the StarterKit automated test suite passing"
-          caption="The automated test suite running successfully." />
-        <ProductScreenshot src={documentation}
-          alt="StarterKit documentation open in VS Code"
-          caption="Installation, usage and verification guidance in the included documentation." />
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <SectionHeading eyebrow="Why Vantdard" title="Software foundations with fewer unnecessary decisions." />
-      <BrandPrinciples />
-    </div>
-  </section>
-
-  <section class="section section--surface">
-    <div class="container">
-      <SectionHeading eyebrow="Products" title="Focused tools for defined engineering problems."
-        description="Vantdard products provide tested, documented starting points without pretending to be complete applications." />
-      <div class="product-grid"><ProductCard product={featuredProduct} /></div>
-      <p class="section-link"><a href="/products">View all products</a></p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container about-layout">
-      <SectionHeading eyebrow="About Vantdard" title="Focused software foundations." />
-      <div>
-        <p class="lede">Vantdard is a software engineering brand creating focused tools and foundations for developers. Its products emphasize clarity, maintainability and disciplined engineering.</p>
-        <p><a href="/about">About Vantdard</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section final-cta">
-    <div class="container final-cta__inner">
-      <div>
-        <h2>Start with a tested Express and TypeScript foundation.</h2>
-        <p>Review what the StarterKit includes, what it deliberately leaves out and where it is available.</p>
-      </div>
-      <ButtonLink href="/products/express-typescript-starterkit">View the StarterKit</ButtonLink>
-    </div>
-  </section>
+<BaseLayout title="Vantdard | Products built with care" description={site.description} canonicalPath="/">
+<header class="hero"><div class="container hero__inner"><div><p class="eyebrow">Vantdard</p><h1>Products built with clarity, reliability and care.</h1><p class="lede">Vantdard develops high-quality products across different domains. Each one is focused, clearly presented and built to earn the same standard of trust.</p><div class="actions"><ButtonLink href="/products">Explore products</ButtonLink><ButtonLink href="/about" variant="secondary">About Vantdard</ButtonLink></div></div><figure class="hero__visual"><Image src={starterkitCover} alt="Cover of the Production-Ready Express + TypeScript StarterKit" widths={[640,960,1280]} sizes="(min-width:48rem) 50vw, 100vw" loading="eager" decoding="async" /></figure></div></header>
+<section class="section section--surface" id="ecosystem"><div class="container"><SectionHeading eyebrow="Ecosystem" title="Different categories. One shared standard." description="Vantdard is not defined by a single industry. Explore the real product areas that make up the ecosystem today."/><div class="ecosystem-grid">{productCategories.map((category)=>{const categoryProducts=getProductsByCategory(category.id);return <article class="area"><div class="area__heading"><p class="area-index">0{category.order}</p><h3>{category.name}</h3><p>{category.shortDescription}</p><a href={`/products/${category.slug}`}>Explore {category.name}</a></div><div class="area__products">{categoryProducts.map((product)=><a class="product-preview" href={`/products/${product.slug}`}><div class="product-preview__image">{product.image&&<Image src={product.image.src} alt="" widths={[320,480,640]} sizes="(min-width:48rem) 24rem, 100vw" loading="lazy" decoding="async"/>}</div><span>{product.name}</span></a>)}</div></article>})}</div></div></section>
+<section class="section"><div class="container"><SectionHeading eyebrow="Why Vantdard" title="A consistent expectation behind every product." description="The categories may differ, but the principles governing what carries the Vantdard name remain shared."/><BrandPrinciples/></div></section>
+<section class="final-cta"><div class="container final-cta__inner"><div><h2>Explore the Vantdard ecosystem.</h2><p>Start with a category, then find the product designed for your specific need.</p></div><ButtonLink href="/products">Browse categories</ButtonLink></div></section>
 </BaseLayout>
 <style>
-  .hero { padding-block: clamp(var(--space-8), 8vw, var(--space-10)); }
-  .hero__inner, .featured-layout, .about-layout, .final-cta__inner { display: grid; gap: var(--space-7); }
-  .hero h1 { font-size: var(--text-hero); }
-  .hero__actions, .featured-layout .actions { margin-block-start: var(--space-6); }
-  .hero__visual { min-width: 0; margin: 0; overflow: hidden; border: var(--border-width) solid var(--color-border-strong); background: #090b0e; }
-  .hero__visual :global(img) { display: block; width: 100%; height: auto; }
-  .featured-layout h2, .final-cta h2 { max-width: 22ch; font-size: var(--text-2xl); letter-spacing: -0.03em; }
-  .eyebrow { margin-block-end: var(--space-3); color: var(--color-accent); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  .evidence-list { margin: 0; border-block-start: var(--border-width) solid var(--color-border); }
-  .evidence-list div { display: grid; gap: var(--space-2); padding-block: var(--space-4); border-block-end: var(--border-width) solid var(--color-border); }
-  .evidence-list dt { color: var(--color-foreground-muted); font-size: var(--text-sm); }
-  .evidence-list dd { margin: 0; font-weight: 650; }
-  .evidence-visuals { display: grid; gap: var(--space-5); margin-block-start: var(--space-7); }
-  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); gap: var(--space-5); }
-  .section-link { margin-block: var(--space-5) 0; }
-  .about-layout > :first-child { margin-block-end: 0; }
-  .final-cta { background: var(--color-foreground); color: var(--color-background); }
-  .final-cta p { margin-block-end: 0; color: var(--color-border); }
-  .final-cta__inner { align-items: center; }
-  @media (min-width: 48rem) {
-    .hero__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; }
-    .featured-layout, .about-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-    .evidence-list div { grid-template-columns: minmax(8rem, 0.3fr) minmax(0, 1fr); gap: var(--space-6); }
-    .evidence-visuals { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .final-cta__inner { grid-template-columns: minmax(0, 1fr) auto; }
-  }
+.hero{padding-block:clamp(var(--space-8),8vw,var(--space-10))}.hero__inner,.final-cta__inner{display:grid;gap:var(--space-7)}.hero h1{font-size:var(--text-hero)}.actions{margin-block-start:var(--space-6)}.hero__visual{min-width:0;margin:0;overflow:hidden;border:var(--border-width) solid var(--color-border-strong);background:var(--color-surface)}.hero__visual :global(img){display:block;width:100%;height:auto}.ecosystem-grid{display:grid;gap:var(--space-7)}.area{display:grid;gap:var(--space-6);padding-block:var(--space-6);border-block-start:var(--border-width) solid var(--color-border)}.area-index{margin-block-end:var(--space-3);color:var(--color-accent);font-family:var(--font-mono);font-size:var(--text-xs)}.area h3,.final-cta h2{font-size:var(--text-2xl);letter-spacing:-.03em}.area__heading>p:last-of-type{color:var(--color-foreground-muted)}.area__products{display:grid;gap:var(--space-4)}.product-preview{display:grid;grid-template-columns:minmax(6rem,9rem) minmax(0,1fr);gap:var(--space-4);align-items:center;color:inherit;font-weight:700;text-decoration:none}.product-preview__image{overflow:hidden;border:var(--border-width) solid var(--color-border);background:var(--color-background)}.product-preview__image :global(img){display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}.final-cta{padding-block:clamp(var(--space-6),4vw,var(--space-8));border-block-start:var(--border-width) solid var(--color-border-strong);background:var(--color-surface-strong);color:var(--color-foreground)}.final-cta p{color:var(--color-foreground-muted)}@media(min-width:48rem){.hero__inner{grid-template-columns:repeat(2,minmax(0,1fr));align-items:center}.area{grid-template-columns:minmax(0,.8fr) minmax(18rem,1.2fr);align-items:start}.final-cta__inner{grid-template-columns:minmax(0,1fr) auto;align-items:center}}
 </style>

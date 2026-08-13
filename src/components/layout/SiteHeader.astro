@@ -1,43 +1,16 @@
 ---
 import { Image } from "astro:assets";
 import lockup from "../../assets/brand/vantdard-lockup.webp";
-import ButtonLink from "../ui/ButtonLink.astro";
 import PrimaryNavigation from "../navigation/PrimaryNavigation.astro";
 ---
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand-link" href="/" aria-label="Vantdard home">
-      <Image
-        src={lockup}
-        alt="Vantdard"
-        widths={[240, 360, 480]}
-        sizes="(min-width: 48rem) 9.5rem, 8rem"
-        loading="eager"
-        decoding="async"
-      />
+      <Image src={lockup} alt="Vantdard" widths={[240, 360, 480]} sizes="(min-width: 48rem) 9.5rem, 8rem" loading="eager" decoding="async" />
     </a>
     <PrimaryNavigation />
-    <div class="header-action">
-      <ButtonLink href="/products/express-typescript-starterkit" variant="secondary">
-        View the StarterKit
-      </ButtonLink>
-    </div>
   </div>
 </header>
 <style>
-  .site-header { border-block-end: var(--border-width) solid var(--color-border); }
-  .header-inner {
-    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2) var(--space-4);
-    align-items: center; min-height: 4.5rem; padding-block: var(--space-2);
-  }
-  .brand-link { display: inline-flex; width: fit-content; align-items: center; }
-  .brand-link :global(img) { display: block; width: 8rem; height: auto; }
-  .header-inner :global(nav) { grid-column: 1 / -1; grid-row: 2; }
-  .header-action { grid-column: 2; grid-row: 1; }
-  @media (min-width: 48rem) {
-    .header-inner { grid-template-columns: minmax(10rem, 1fr) auto minmax(10rem, 1fr); gap: var(--space-5); min-height: 5rem; padding-block: 0; }
-    .brand-link :global(img) { width: 9.5rem; }
-    .header-inner :global(nav) { grid-column: 2; grid-row: 1; }
-    .header-action { grid-column: 3; justify-self: end; }
-  }
+.site-header{border-block-end:var(--border-width) solid var(--color-border)}.header-inner{display:grid;gap:var(--space-2) var(--space-4);align-items:center;min-height:4.5rem;padding-block:var(--space-2)}.brand-link{display:inline-flex;width:fit-content;align-items:center}.brand-link :global(img){display:block;width:8rem;height:auto}.header-inner :global(nav){grid-row:2}@media(min-width:36rem){.header-inner{grid-template-columns:minmax(10rem,1fr) auto;gap:var(--space-5);min-height:5rem;padding-block:0}.brand-link :global(img){width:9.5rem}.header-inner :global(nav){grid-column:2;grid-row:1;justify-self:end}}
 </style>
