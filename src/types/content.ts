@@ -35,6 +35,48 @@ export interface LicenseOption { use: LicenseUse; name: string; price: ProductPr
 export interface PurchaseOption { marketplace: Marketplace; label: string; url: string | null; active: boolean; }
 export interface ProductImage { src: ImageMetadata; alt: string; width: number; height: number; }
 
+export type DigitalAssetFormat = "PNG" | "JPG" | "WEBP";
+export interface DigitalCatalogImage { src: ImageMetadata; alt: string; caption?: string; }
+export interface DigitalCollectionDefaults {
+  animals: readonly string[];
+  formats: readonly DigitalAssetFormat[];
+  illustrationCount: number;
+  licenseOptions: readonly LicenseOption[];
+  marketplace: Marketplace;
+  support: string;
+  updates: string;
+  refunds: string;
+}
+export interface DigitalCollection {
+  slug: string;
+  familySlug: string;
+  name: string;
+  shortName: string;
+  description: string;
+  variationsLabel: string;
+  variations: readonly string[];
+  status: ProductStatus;
+  purchaseUrl: string | null;
+  cover?: DigitalCatalogImage;
+  gallery: readonly DigitalCatalogImage[];
+  overrides?: Partial<DigitalCollectionDefaults>;
+  seo: PageMetadata;
+}
+export interface DigitalProductFamily {
+  slug: string;
+  name: string;
+  description: string;
+  audience: string;
+  collectionCount: number;
+  illustrationCount: number;
+  subjectCount: number;
+  subjectLabel: string;
+  cover?: DigitalCatalogImage;
+  collectionSlugs: readonly string[];
+  seo: PageMetadata;
+}
+export interface ResolvedDigitalCollection extends DigitalCollection, DigitalCollectionDefaults {}
+
 export interface Product {
   kind: ProductKind;
   categoryId: ProductCategoryId;

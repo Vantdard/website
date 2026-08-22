@@ -1,0 +1,15 @@
+---
+import { Image } from "astro:assets";
+import type { ResolvedDigitalCollection } from "../../types/content";
+import ButtonLink from "../ui/ButtonLink.astro";
+interface Props { collection: ResolvedDigitalCollection; index: number; }
+const { collection, index } = Astro.props;
+const path = `/products/digital-products/${collection.familySlug}/${collection.slug}`;
+---
+<article class:list={["collection-feature", {"collection-feature--reverse": index % 2 === 1}]}>
+  {collection.cover && <a class="collection-feature__visual" href={path} aria-label={`Explore ${collection.name}`}><Image src={collection.cover.src} alt={collection.cover.alt} widths={[640,960,1280]} sizes="(min-width:48rem) 50vw, 100vw" loading="lazy" decoding="async" /></a>}
+  <div class="collection-feature__body"><p class="index">0{index + 1} · {collection.illustrationCount} illustrations</p><h2><a href={path}>{collection.shortName}</a></h2><p>{collection.description}</p><ul aria-label={`${collection.shortName} variations`}>{collection.variations.map((variation)=><li>{variation}</li>)}</ul><ButtonLink href={path} variant="secondary">Explore {collection.shortName}</ButtonLink></div>
+</article>
+<style>
+.collection-feature{display:grid;gap:var(--space-6);align-items:center;padding-block:clamp(var(--space-6),6vw,var(--space-9));border-block-start:var(--border-width) solid var(--color-border)}.collection-feature__visual{display:block;overflow:hidden;border:var(--border-width) solid var(--color-border-strong);background:var(--color-surface)}.collection-feature__visual :global(img){display:block;width:100%;height:auto}.collection-feature__body{max-width:36rem}.index{color:var(--color-accent);font-family:var(--font-mono);font-size:var(--text-xs);font-weight:700;text-transform:uppercase}.collection-feature h2{font-size:var(--text-2xl)}.collection-feature h2 a{text-decoration:none}.collection-feature__body>p:not(.index){color:var(--color-foreground-muted)}ul{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-5) 0;padding:0;list-style:none}li{padding:var(--space-1) var(--space-3);border:var(--border-width) solid var(--color-border);border-radius:999px;font-size:var(--text-sm)}@media(min-width:48rem){.collection-feature:has(.collection-feature__visual){grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-8)}.collection-feature--reverse .collection-feature__visual{grid-column:2}.collection-feature--reverse .collection-feature__body{grid-column:1;grid-row:1}}
+</style>

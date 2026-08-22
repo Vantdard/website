@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import Breadcrumbs from "../../../../components/digital/Breadcrumbs.astro";
+import CollectionFeature from "../../../../components/digital/CollectionFeature.astro";
+import ProductFacts from "../../../../components/product/ProductFacts.astro";
+import SectionHeading from "../../../../components/ui/SectionHeading.astro";
+import { getDigitalCollectionsByFamily, getDigitalFamilyBySlug } from "../../../../data/digitalCatalog";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+const family=getDigitalFamilyBySlug("cute-animals");
+if(!family) throw new Error("Cute Animals family data is missing.");
+const collections=getDigitalCollectionsByFamily(family.slug);
+const facts=[{label:"Collections",value:String(family.collectionCount)},{label:"Illustrations",value:String(family.illustrationCount)},{label:"Animals",value:String(family.subjectCount)}];
+---
+<BaseLayout {...family.seo}>
+<header class="family-hero"><div class="container"><Breadcrumbs items={[{label:"Products",href:"/products"},{label:"Digital Products",href:"/products/digital-products"},{label:family.name}]}/><div class="family-hero__grid"><div class="family-hero__content"><p class="eyebrow">Illustration family</p><h1>{family.name}</h1><p class="lede">{family.description}</p><p class="audience">Created for {family.audience.toLowerCase()}</p></div>{family.cover&&<figure><Image src={family.cover.src} alt={family.cover.alt} widths={[640,960,1280,1600]} sizes="(min-width:64rem) 52vw, 100vw" loading="eager" decoding="async"/></figure>}</div></div></header>
+<section class="section section--surface"><div class="container"><SectionHeading eyebrow="The family" title="One cast. Three distinct collections." description="Expressions, Hobbies and Professions extend the same nine characters across coordinated themes."/><ProductFacts facts={facts}/></div></section>
+<section class="collections"><div class="container">{collections.map((collection,index)=><CollectionFeature collection={collection} index={index}/>)}</div></section>
+<section class="section section--surface"><div class="container family-note"><SectionHeading eyebrow="Built to work together" title="Consistent characters across changing themes." description="Use one collection on its own or combine themes while keeping the same recognizable animal lineup."/><a href="/products/digital-products">Back to Digital Products</a></div></section>
+</BaseLayout>
+<style>.family-hero{padding-block:clamp(var(--space-7),7vw,var(--space-10))}.family-hero__grid{display:grid;gap:var(--space-7);align-items:center}.family-hero__content{max-width:var(--width-reading)}.family-hero h1{font-size:var(--text-hero)}.family-hero figure{margin:0;overflow:hidden;border:var(--border-width) solid var(--color-border-strong);background:var(--color-surface)}.family-hero figure :global(img){display:block;width:100%;height:auto}.audience{margin-block-start:var(--space-5);color:var(--color-foreground-muted)}.collections{background:var(--color-background)}.family-note>a{font-weight:700}@media(min-width:48rem){.family-hero__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>
+
+

@@ -1,4 +1,3 @@
-import expressionsCover from "../assets/products/cute-animals-expressions/Cover.png";
 import starterkitCover from "../assets/products/starterkit/cover.png";
 import type { Product } from "../types/content";
 
@@ -41,43 +40,6 @@ export const products = [
     licenseSummary: "Includes an individual commercial license.",
     image: { src: starterkitCover, alt: "Cover of the Production-Ready Express + TypeScript StarterKit", width: starterkitCover.width, height: starterkitCover.height },
     seo: { title: "Production-Ready Express + TypeScript StarterKit | Vantdard", description: "A tested Express and TypeScript backend foundation with Zod, Vitest, Supertest, 33 automated tests and 97.7% test coverage.", canonicalPath: "/products/express-typescript-starterkit", ogType: "product" },
-  },
-  {
-    kind: "digital-asset-collection",
-    categoryId: "digital-products",
-    family: { slug: "cute-animals", name: "Cute Animals" },
-    slug: "cute-animals-expressions",
-    name: "Cute Animals — Expressions",
-    shortName: "Cute Animals — Expressions",
-    cardLabel: "Digital Products · Cute Animals",
-    cardActionLabel: "Explore Expressions",
-    shortDescription: "A collection of 45 ready-to-use animal illustrations across nine characters and five expressive poses.",
-    description: "Nine adorable animal characters, each illustrated in five expressions for creative projects, content and finished products.",
-    audience: "Creators, designers and small businesses that need adorable animal illustrations ready to incorporate into their own creative projects, content or products.",
-    price: { amount: 4.99, currency: "USD", paymentModel: "one-time" },
-    licenseOptions: [
-      { use: "personal", name: "Personal Use", price: { amount: 4.99, currency: "USD", paymentModel: "one-time" }, summary: "For personal creative projects and content." },
-      { use: "commercial", name: "Commercial Use", price: { amount: 9.99, currency: "USD", paymentModel: "one-time" }, summary: "For creating final products intended for sale." },
-    ],
-    status: "available",
-    featured: false,
-    technologies: [],
-    features: [
-      { name: "9 animals", category: "content" }, { name: "5 expressions per animal", category: "content" },
-      { name: "45 illustrations", category: "content" }, { name: "PNG", category: "format" },
-      { name: "JPG", category: "format" }, { name: "WEBP", category: "format" },
-    ],
-    evidence: [{ label: "Animals", value: "9" }, { label: "Expressions each", value: "5" }, { label: "Illustrations", value: "45" }],
-    includes: ["Capybara", "Cat", "Dog", "Duck", "Fox", "Frog", "Koala", "Panda", "Rabbit"],
-    excludes: ["Reselling original files", "Redistributing or sharing original files", "Sublicensing original files", "Versions that function essentially as substitutes for the original assets"],
-    purchaseOptions: [{ marketplace: "payhip", label: "Buy on Payhip", url: "https://payhip.com/b/lJW7v", active: true }],
-    availabilityMessage: "Cute Animals — Expressions is available through Payhip.",
-    support: "Support is limited to problems with the delivered files.",
-    updates: "No product updates are promised.",
-    refunds: "Refunds are handled according to Payhip's applicable terms.",
-    licenseSummary: "Available with Personal Use and Commercial Use license options.",
-    image: { src: expressionsCover, alt: "Cute Animals — Expressions collection cover showing illustrated animal characters", width: expressionsCover.width, height: expressionsCover.height },
-    seo: { title: "Cute Animals — Expressions | Vantdard", description: "A collection of 45 animal illustrations featuring nine animals and five expressions, delivered in PNG, JPG and WEBP formats.", canonicalPath: "/products/cute-animals-expressions", ogType: "product" },
   },
 ] as const satisfies readonly Product[];
 

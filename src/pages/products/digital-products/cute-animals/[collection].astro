@@ -1,0 +1,11 @@
+---
+import CollectionTemplate from "../../../../components/digital/CollectionTemplate.astro";
+import { digitalCollections, getDigitalCollectionBySlug, getDigitalCollectionsByFamily, getDigitalFamilyBySlug } from "../../../../data/digitalCatalog";
+export function getStaticPaths(){return digitalCollections.map((collection)=>({params:{collection:collection.slug}}));}
+const slug=Astro.params.collection;
+const family=getDigitalFamilyBySlug("cute-animals");
+const collection=slug?getDigitalCollectionBySlug("cute-animals",slug):undefined;
+if(!family||!collection) throw new Error("Digital collection data is missing.");
+const related=getDigitalCollectionsByFamily(family.slug).filter((item)=>item.slug!==collection.slug);
+---
+<CollectionTemplate collection={collection} family={family} related={related}/>

@@ -1,0 +1,14 @@
+---
+import { Image } from "astro:assets";
+import type { DigitalProductFamily } from "../../types/content";
+import ButtonLink from "../ui/ButtonLink.astro";
+interface Props { family: DigitalProductFamily; }
+const { family } = Astro.props;
+---
+<article class="family-card">
+  {family.cover && <a class="family-card__visual" href={`/products/digital-products/${family.slug}`}><Image src={family.cover.src} alt={family.cover.alt} widths={[640,960,1280]} sizes="(min-width:48rem) 52vw, 100vw" loading="lazy" decoding="async" /></a>}
+  <div class="family-card__content"><p class="eyebrow">Illustration family</p><h2>{family.name}</h2><p>{family.description}</p><dl><div><dt>Collections</dt><dd>{family.collectionCount}</dd></div><div><dt>Illustrations</dt><dd>{family.illustrationCount}</dd></div><div><dt>{family.subjectLabel}</dt><dd>{family.subjectCount}</dd></div></dl><ButtonLink href={`/products/digital-products/${family.slug}`}>Explore {family.name}</ButtonLink></div>
+</article>
+<style>
+.family-card{display:grid;gap:var(--space-7);padding:clamp(var(--space-6),5vw,var(--space-8));border:var(--border-width) solid var(--color-border-strong);background:var(--color-background);box-shadow:var(--shadow-subtle)}.family-card__visual{display:block;overflow:hidden;border:var(--border-width) solid var(--color-border);background:var(--color-surface)}.family-card__visual :global(img){display:block;width:100%;height:auto}.family-card__content{align-self:center}.family-card h2{font-size:var(--text-2xl)}.family-card__content>p:not(.eyebrow){color:var(--color-foreground-muted)}dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:var(--space-6) 0;padding-block:var(--space-4);border-block:var(--border-width) solid var(--color-border)}dl div{min-width:0}dt{color:var(--color-foreground-muted);font-size:var(--text-xs);text-transform:uppercase}dd{margin:var(--space-1) 0 0;font-size:var(--text-xl);font-weight:750}@media(min-width:48rem){.family-card:has(.family-card__visual){grid-template-columns:minmax(0,1.1fr) minmax(18rem,.9fr)}}
+</style>

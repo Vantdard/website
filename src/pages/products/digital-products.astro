@@ -1,0 +1,12 @@
+---
+import Breadcrumbs from "../../components/digital/Breadcrumbs.astro";
+import DigitalFamilyCard from "../../components/digital/DigitalFamilyCard.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
+import { digitalFamilies } from "../../data/digitalCatalog";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Digital Products | Vantdard" description="Purpose-built digital resources for creators, designers and small businesses, organized into clear product families." canonicalPath="/products/digital-products">
+<header class="category-header"><div class="container"><Breadcrumbs items={[{label:"Products",href:"/products"},{label:"Digital Products"}]}/><p class="eyebrow">Vantdard category</p><h1>Digital Products</h1><p class="lede">Purpose-built digital resources for creators, designers and small businesses. Explore each family to understand its collections, visual language and practical formats.</p></div></header>
+<section class="section section--surface"><div class="container"><SectionHeading eyebrow="Product families" title="Explore by visual family." description="Each family groups coordinated collections with a shared subject and visual system."/><div class="family-list">{digitalFamilies.map((family)=><DigitalFamilyCard family={family}/>)}</div></div></section>
+</BaseLayout>
+<style>.category-header{padding-block:clamp(var(--space-7),7vw,var(--space-10))}.category-header h1{font-size:var(--text-hero)}.family-list{display:grid;gap:var(--space-7)}</style>
