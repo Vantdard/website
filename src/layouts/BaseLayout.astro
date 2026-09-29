@@ -1,6 +1,8 @@
 ---
 import SiteFooter from "../components/layout/SiteFooter.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
+import MaintenanceNotice from "../components/layout/MaintenanceNotice.astro";
+import { maintenance } from "../data/maintenance";
 import { site } from "../data/site";
 import "../styles/global.css";
 import type { PageMetadata } from "../types/content";
@@ -29,7 +31,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, site.origin) : undefined;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content={robots} />
+    <meta name="robots" content={maintenance.enabled ? "noindex, nofollow" : robots} />
     <meta
       name="p:domain_verify"
       content="1795793307e175ee322b8297c3c0a6e7"
@@ -65,11 +67,19 @@ const ogImageUrl = ogImage ? new URL(ogImage, site.origin) : undefined;
     <slot name="head" />
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <SiteHeader />
-    <main id="main-content">
-      <slot />
-    </main>
-    <SiteFooter />
+    {
+      maintenance.enabled ? (
+        <MaintenanceNotice />
+      ) : (
+        <>
+          <a class="skip-link" href="#main-content">Skip to content</a>
+          <SiteHeader />
+          <main id="main-content">
+            <slot />
+          </main>
+          <SiteFooter />
+        </>
+      )
+    }
   </body>
 </html>
