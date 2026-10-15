@@ -16,3 +16,6 @@ dist/
 .skills/
 *.log
 .DS_Store
+
+# Local unreleased media (never commit or publish)
+private-media/

@@ -1,0 +1,96 @@
+---
+import { Image } from "astro:assets";
+import nodamLogo from "../../assets/brand/nodam/Logo.png";
+import moonTexture from "../../assets/brand/nodam/lroc_color_2k.jpg";
+
+interface Props {
+  publicMode?: boolean;
+}
+
+const { publicMode = false } = Astro.props;
+---
+
+<section id="prototype" class="lunar" data-lunar-prototype aria-label="Identidad visual de NODAM">
+  <nav class="prototype-nav" aria-label={publicMode ? "Navegación principal" : "Prototipo experimental"}>
+    {
+      publicMode ? (
+        <>
+          <a href="/" aria-current="page">NODAM</a>
+          <a href="/music">Música</a>
+        </>
+      ) : (
+        <>
+          <a href="/experiments/portal">Comparar</a>
+          <span aria-current="page">Lunar / Stage 2C</span>
+        </>
+      )
+    }
+  </nav>
+
+  <div class="lunar-stage">
+    <div class="atmosphere" aria-hidden="true"></div>
+
+    <h1 class="sr-only">NODAM</h1>
+
+    <div class="logo-lockup" aria-hidden="true">
+      <Image
+        class="logo-lockup__image"
+        src={nodamLogo}
+        alt=""
+        width={1931}
+        height={814}
+        loading="eager"
+        decoding="sync"
+      />
+      <span class="logo-lockup__moon-target"></span>
+      <span class="logo-lockup__moon-cover"></span>
+    </div>
+
+    <div
+      class="moon"
+      aria-hidden="true"
+      style={`--moon-texture: url("${moonTexture.src}")`}
+    >
+      <span class="moon__surface"></span>
+      <span class="moon__shadow"></span>
+    </div>
+
+    <p class="scroll-cue">Desplázate</p>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/lunarMotion";
+</script>
+
+<style>
+  :global(html) { background: #000; }
+  :global(body) { overflow-x: clip; background: #000; }
+  .lunar { --logo-opacity: 0; --moon-opacity: 1; --cover-opacity: 0; --atmosphere-opacity: .28; position: relative; min-height: 260svh; overflow: clip; background: #000; color: #f4f1e9; isolation: isolate; }
+  .lunar-stage { position: sticky; top: 0; min-height: 100svh; overflow: clip; }
+  .prototype-nav { position: absolute; z-index: 20; inset: var(--space-4) var(--page-gutter) auto; display: flex; justify-content: space-between; gap: var(--space-4); color: #f2f0ea; font-size: var(--text-sm); }
+  .prototype-nav a, .prototype-nav span { padding: .45rem .7rem; background: rgba(0,0,0,.76); }
+  .atmosphere { position: absolute; inset: -18%; opacity: var(--atmosphere-opacity); background: radial-gradient(circle at 50% 48%, rgba(226,232,238,.13), transparent 28%), radial-gradient(circle at 28% 72%, rgba(75,91,112,.1), transparent 24%); filter: blur(2.2rem); pointer-events: none; }
+  .logo-lockup { position: absolute; z-index: 2; top: 50%; left: 50%; width: min(94vw, 90rem); aspect-ratio: 1931 / 814; translate: -50% -50%; }
+  .logo-lockup__image { display: block; width: 100%; height: 100%; opacity: var(--logo-opacity); object-fit: contain; }
+  .logo-lockup__moon-target, .logo-lockup__moon-cover { position: absolute; top: 49.15%; left: 38.94%; width: 10.45%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; }
+  .logo-lockup__moon-target { pointer-events: none; }
+  .logo-lockup__moon-cover { z-index: 2; opacity: var(--cover-opacity); background: #000; box-shadow: 0 0 .45rem #000; }
+  .moon { position: absolute; z-index: 4; top: 0; left: 0; width: var(--moon-size, 34rem); aspect-ratio: 1; overflow: hidden; opacity: var(--moon-opacity); translate: calc(var(--moon-x, 50vw) - 50%) calc(var(--moon-y, 50vh) - 50%); border-radius: 50%; filter: drop-shadow(0 0 clamp(1rem, 3vw, 3.5rem) rgba(242,240,225,.32)); will-change: width, translate, opacity; }
+  .moon__surface, .moon__shadow { position: absolute; inset: 0; border-radius: inherit; }
+  .moon__surface { overflow: hidden; background-color: #d8d5cd; background-image: var(--moon-texture); background-position: center; background-size: 200% 100%; box-shadow: inset -1.15rem -.7rem 2.5rem rgba(10,12,15,.34), inset .45rem .25rem 1.2rem rgba(255,255,255,.28); filter: grayscale(1) contrast(1.14) brightness(1.04); }
+  .moon__surface::after { position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(circle at 35% 28%, rgba(255,255,255,.26), transparent 37%), radial-gradient(circle at 64% 68%, transparent 42%, rgba(4,6,8,.28) 100%); content: ""; mix-blend-mode: soft-light; }
+  .moon__shadow { background: #000; transform: translateX(var(--moon-shadow-x, -110%)); will-change: transform; }
+  .scroll-cue { position: absolute; z-index: 8; inset: auto var(--page-gutter) var(--space-5) auto; margin: 0; color: #8c8792; font-size: var(--text-sm); writing-mode: vertical-rl; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  @media (max-width: 40rem) {
+    .lunar { min-height: 240svh; }
+    .logo-lockup { width: 118vw; }
+    .prototype-nav { font-size: .72rem; }
+    .scroll-cue { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lunar:not([data-motion-mode="full"]) { min-height: 100svh; --logo-opacity: 1; --moon-opacity: 0; --cover-opacity: 0; --atmosphere-opacity: .16; }
+    .lunar:not([data-motion-mode="full"]) .lunar-stage { position: relative; }
+  }
+</style>

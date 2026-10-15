@@ -5,19 +5,16 @@ import { site } from "../../data/site";
 
 <main class="maintenance" id="main-content">
   <div class="maintenance__content">
-    <p class="maintenance__eyebrow">Vantdard</p>
+    <p class="maintenance__identity">{site.name}</p>
     <h1>{maintenance.title}</h1>
     <p class="maintenance__message">{maintenance.message}</p>
-    <p class="maintenance__contact">
-      For support, contact <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>.
-    </p>
   </div>
 </main>
 
 <style>
   :global(body) {
-    background: var(--color-foreground);
-    color: var(--color-background);
+    background: var(--color-background);
+    color: var(--color-foreground);
   }
 
   .maintenance {
@@ -30,16 +27,16 @@ import { site } from "../../data/site";
   .maintenance__content {
     width: min(100%, 44rem);
     padding-block: clamp(3rem, 10vw, 7rem);
-    border-block: var(--border-width) solid #44443f;
+    border-block: var(--border-width) solid var(--color-border);
   }
 
-  .maintenance__eyebrow {
-    margin-block-end: var(--space-4);
-    color: #8eabff;
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.1em;
+  .maintenance__identity {
+    margin-block-end: var(--space-6);
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 850;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
   }
 
@@ -52,21 +49,7 @@ import { site } from "../../data/site";
   }
 
   .maintenance__message {
-    color: #c9c9c1;
+    color: var(--color-foreground-muted);
     font-size: var(--text-lg);
-  }
-
-  .maintenance__contact {
-    margin-block-start: var(--space-6);
-    color: #c9c9c1;
-    font-size: var(--text-sm);
-  }
-
-  a {
-    color: #ffffff;
-  }
-
-  a:hover {
-    color: #8eabff;
   }
 </style>

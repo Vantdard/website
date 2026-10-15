@@ -1,0 +1,232 @@
+---
+import type { Release } from "../../types/music";
+import { artist } from "../../data/artist";
+
+interface Props {
+  releases: readonly Release[];
+}
+
+const { releases } = Astro.props;
+const featured = releases.find(
+  (release) => release.status !== "unannounced" && release.universe,
+);
+const additional = releases.filter((release) => release.slug !== featured?.slug);
+
+const formatDate = (date: string) =>
+  new Intl.DateTimeFormat("es", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00Z`));
+
+const statusLabel = (release: Release) => {
+  if (release.status === "released") return "Disponible";
+  if (release.status === "announced") return "Próximo lanzamiento";
+  return "Detalles por anunciar";
+};
+---
+
+<section class="music-exploration" aria-labelledby="music-exploration-title">
+  <header class="music-exploration__intro">
+    <p>{artist.philosophy}</p>
+    <h2 id="music-exploration-title">Cada canción abre un universo propio.</h2>
+  </header>
+
+  {
+    featured?.universe && (
+      <article
+        class="featured-release"
+        style={`--release-background:${featured.universe.theme.background};--release-foreground:${featured.universe.theme.foreground};--release-accent:${featured.universe.theme.accent};--release-muted:${featured.universe.theme.muted};--release-display:${featured.universe.theme.displayFont};--release-body:${featured.universe.theme.bodyFont}`}
+      >
+        <div class="featured-release__atmosphere" aria-hidden="true" />
+        <div class="featured-release__content">
+          <p class="featured-release__status">{statusLabel(featured)}</p>
+          <h3>{featured.title}</h3>
+          {featured.releaseDate && (
+            <time datetime={featured.releaseDate}>{formatDate(featured.releaseDate)}</time>
+          )}
+          <a href={`/music/${featured.slug}`}>Entrar al universo</a>
+        </div>
+      </article>
+    )
+  }
+
+  {
+    additional.length > 0 && (
+      <div class="release-sequence" aria-label="Otros lanzamientos">
+        {additional.map((release) => (
+          <article class="release-sequence__item">
+            <div>
+              <h3>{release.title}</h3>
+              <p>{statusLabel(release)}</p>
+            </div>
+            {release.universe && release.status !== "unannounced" && (
+              <a href={`/music/${release.slug}`}>Abrir universo</a>
+            )}
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  <a class="music-exploration__all" href="/music">Explorar la música de NODAM</a>
+</section>
+
+<style>
+  .music-exploration {
+    position: relative;
+    overflow: clip;
+    background: #000;
+    color: #f4f1e9;
+  }
+
+  .music-exploration__intro {
+    width: min(100% - (2 * var(--page-gutter)), 72rem);
+    margin-inline: auto;
+    padding-block: clamp(6rem, 14vw, 12rem);
+  }
+
+  .music-exploration__intro p {
+    margin-block-end: var(--space-5);
+    color: #aaa4b0;
+    font-size: var(--text-lg);
+  }
+
+  .music-exploration__intro h2 {
+    max-width: 11ch;
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 8.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.065em;
+  }
+
+  .featured-release {
+    position: relative;
+    display: grid;
+    min-height: min(56rem, 92svh);
+    align-items: end;
+    overflow: hidden;
+    padding: clamp(2rem, 7vw, 6rem) var(--page-gutter);
+    background: var(--release-background);
+    color: var(--release-foreground);
+    font-family: var(--release-body);
+    isolation: isolate;
+  }
+
+  .featured-release__atmosphere {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+      radial-gradient(circle at 76% 20%, color-mix(in srgb, var(--release-accent) 42%, transparent), transparent 23%),
+      linear-gradient(118deg, transparent 0 41%, color-mix(in srgb, var(--release-accent) 14%, transparent) 41.2% 58%, transparent 58.2%),
+      var(--release-background);
+    opacity: 0.9;
+  }
+
+  .featured-release__content {
+    width: min(100%, 76rem);
+    margin-inline: auto;
+  }
+
+  .featured-release__status {
+    margin-block-end: var(--space-5);
+    color: var(--release-muted);
+  }
+
+  .featured-release h3 {
+    max-width: 9ch;
+    margin: 0;
+    color: var(--release-foreground);
+    font-family: var(--release-display);
+    font-size: clamp(4rem, 14vw, 13rem);
+    line-height: 0.76;
+    letter-spacing: -0.08em;
+    text-wrap: balance;
+  }
+
+  .featured-release time {
+    display: block;
+    margin-block-start: var(--space-6);
+    color: var(--release-muted);
+  }
+
+  .featured-release a,
+  .music-exploration__all {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    margin-block-start: var(--space-6);
+    color: inherit;
+    font-weight: 750;
+  }
+
+  .release-sequence {
+    width: min(100% - (2 * var(--page-gutter)), 76rem);
+    margin-inline: auto;
+    padding-block: clamp(5rem, 12vw, 10rem);
+  }
+
+  .release-sequence__item {
+    display: grid;
+    min-height: clamp(12rem, 25vw, 20rem);
+    align-items: center;
+    padding-block: var(--space-6);
+    border-block-start: 1px solid #28252d;
+  }
+
+  .release-sequence__item:last-child {
+    border-block-end: 1px solid #28252d;
+  }
+
+  .release-sequence__item:nth-child(even) > div {
+    justify-self: end;
+    text-align: end;
+  }
+
+  .release-sequence h3 {
+    max-width: 16ch;
+    margin-block-end: var(--space-4);
+    font-size: clamp(2.4rem, 7vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+  }
+
+  .release-sequence p {
+    margin: 0;
+    color: #77717e;
+  }
+
+  .release-sequence a {
+    width: fit-content;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
+  .music-exploration__all {
+    margin: 0 var(--page-gutter) clamp(5rem, 10vw, 9rem);
+  }
+
+  @media (min-width: 48rem) {
+    .featured-release__content {
+      padding-inline-start: clamp(2rem, 8vw, 9rem);
+    }
+
+    .release-sequence__item {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-7);
+    }
+
+    .release-sequence__item:nth-child(even) > div {
+      grid-column: 1;
+      width: 72%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-release__atmosphere {
+      opacity: 0.72;
+    }
+  }
+</style>

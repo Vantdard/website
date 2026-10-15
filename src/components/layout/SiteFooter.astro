@@ -1,23 +1,28 @@
 ---
-import { Image } from "astro:assets";
-import wordmark from "../../assets/brand/vantdard-wordmark-dark.png";
 import { primaryNavigation } from "../../data/navigation";
-import { productCategories } from "../../data/categories";
+import { artist } from "../../data/artist";
 import { site } from "../../data/site";
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
   <div class="container footer-main">
     <div class="footer-about">
-      <a class="footer-brand" href="/" aria-label="Vantdard home"><Image src={wordmark} alt="Vantdard" widths={[240,360,480]} sizes="9rem" loading="lazy" decoding="async" /></a>
-      <p>{site.description}</p>
+      <a class="footer-brand" href="/" aria-label={`${site.name}, inicio`}>{site.name}</a>
+      <p>{artist.philosophy}</p>
     </div>
-    <nav aria-labelledby="footer-explore"><h2 id="footer-explore">Explore</h2><ul>{primaryNavigation.map((item)=><li><a href={item.href}>{item.label}</a></li>)}</ul></nav>
-    <nav aria-labelledby="footer-categories"><h2 id="footer-categories">Categories</h2><ul>{productCategories.map((category)=><li><a href={`/products/${category.slug}`}>{category.name}</a></li>)}</ul></nav>
-    <div class="footer-connect"><h2>Connect</h2><a class="support" href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a><ul class="social-list">{site.socialLinks.map((social)=><li><a href={social.href} target="_blank" rel="noreferrer">{social.label}<span class="sr-only"> (opens in a new tab)</span></a></li>)}</ul></div>
+    <nav aria-labelledby="footer-explore"><h2 id="footer-explore">Explorar</h2><ul>{primaryNavigation.map((item)=><li><a href={item.href}>{item.label}</a></li>)}</ul></nav>
   </div>
-  <div class="container footer-bottom"><small>&copy; {year} {site.name}. All rights reserved.</small><a href="/">vantdard.com</a></div>
+  <div class="container footer-bottom"><small>&copy; {year} {site.name}</small></div>
 </footer>
 <style>
-.site-footer{padding-block:var(--space-8) var(--space-5);background:var(--color-foreground);color:var(--color-background)}.footer-main{display:grid;gap:var(--space-7)}.footer-about{max-width:30rem}.footer-brand{display:inline-flex;width:fit-content}.footer-brand :global(img){display:block;width:9rem;height:auto}.footer-about p{margin-block:var(--space-4) 0;color:var(--color-border);font-size:var(--text-sm)}h2{margin-block-end:var(--space-4);color:var(--color-background);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase}ul{margin:0;padding:0;list-style:none}nav ul{display:grid;gap:var(--space-2)}a{color:var(--color-background)}nav a,.support,.social-list a{display:inline-flex;align-items:center;min-height:2.75rem}.support{font-weight:650}.social-list{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4);margin-block-start:var(--space-4)}.social-list a{color:var(--color-border);font-size:var(--text-sm)}.footer-bottom{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-6);justify-content:space-between;margin-block-start:var(--space-7);padding-block-start:var(--space-5);border-block-start:var(--border-width) solid #3f3f3a;color:var(--color-border);font-size:var(--text-sm)}.footer-bottom a{color:inherit}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(min-width:48rem){.footer-main{grid-template-columns:minmax(16rem,1.5fr) repeat(3,minmax(8rem,1fr));align-items:start}}
+  .site-footer { padding-block: var(--space-8) var(--space-5); border-block-start: var(--border-width) solid var(--color-border); background: var(--color-surface); }
+  .footer-main { display: grid; gap: var(--space-7); }
+  .footer-about { max-width: 30rem; }
+  .footer-brand { display: inline-flex; color: var(--color-foreground); font-family: var(--font-display); font-size: var(--text-xl); font-weight: 850; letter-spacing: .18em; text-decoration: none; }
+  .footer-about p { margin-block: var(--space-4) 0; color: var(--color-foreground-muted); font-size: var(--text-sm); }
+  h2 { margin-block-end: var(--space-4); color: var(--color-foreground); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: .1em; text-transform: uppercase; }
+  ul { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  nav a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--color-foreground-muted); }
+  .footer-bottom { margin-block-start: var(--space-7); padding-block-start: var(--space-5); border-block-start: var(--border-width) solid var(--color-border); color: var(--color-foreground-muted); font-size: var(--text-sm); }
+  @media (min-width: 48rem) { .footer-main { grid-template-columns: minmax(16rem, 2fr) minmax(10rem, 1fr); align-items: start; } }
 </style>

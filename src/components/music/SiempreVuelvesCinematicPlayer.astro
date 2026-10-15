@@ -1,0 +1,367 @@
+---
+import { Image } from "astro:assets";
+import cover from "../../assets/music/siempre-vuelves/cover.jpg";
+import {
+  siempreVuelvesDuration,
+  siempreVuelvesLyrics,
+} from "../../data/siempreVuelvesExperience";
+
+interface Props {
+  audioFallback?: string;
+}
+
+const { audioFallback } = Astro.props;
+
+const audioSrc = import.meta.env.DEV
+  ? "/@fs/C:/Users/Usuario/Documents/Vantdard_Web/private-media/siempre-vuelves.mp3"
+  : undefined;
+
+const rainStreaks = Array.from({ length: 34 }, (_, index) => ({
+  left: 3 + ((index * 29) % 94),
+  duration: 1.7 + ((index * 13) % 24) / 10,
+  delay: -((index * 17) % 41) / 10,
+  length: 38 + ((index * 23) % 72),
+  width: 1 + (index % 3) * 0.45,
+  drift: -8 + (index % 5) * 3,
+}));
+
+const glassDrops = Array.from({ length: 22 }, (_, index) => ({
+  left: 4 + ((index * 37) % 91),
+  top: 5 + ((index * 31) % 82),
+  size: 2 + (index % 4),
+  duration: 7 + (index % 6) * 1.7,
+  delay: -((index * 11) % 63) / 10,
+}));
+
+const cityLights = Array.from({ length: 18 }, (_, index) => ({
+  left: 5 + ((index * 41) % 91),
+  top: 34 + ((index * 23) % 58),
+  size: 2 + (index % 3),
+  duration: 2.8 + (index % 5) * 0.9,
+  delay: -((index * 7) % 31) / 10,
+}));
+---
+
+<section
+  id="prototype"
+  class="cinematic-player"
+  data-sv-player
+  data-engaged="false"
+  data-audio-state="idle"
+  data-motion-mode="reduced"
+  aria-label="Universo visual de Siempre vuelves"
+>
+  <h1 class="sr-only">Siempre vuelves — NODAM</h1>
+
+  <nav class="player-nav" aria-label="Navegación del universo">
+    <a href="/">NODAM</a>
+    <a href="/music">Música</a>
+  </nav>
+
+  <div class="artwork-stage" aria-hidden="true">
+    <div class="artwork-canvas">
+      <Image
+        class="artwork"
+        src={cover}
+        alt=""
+        widths={[768, 1280, 1920, 2508]}
+        sizes="100vmax"
+        loading="eager"
+        decoding="sync"
+      />
+
+      <div class="window-atmosphere">
+        <div class="city-lights">
+          {cityLights.map((light) => (
+            <i style={`--x:${light.left}%;--y:${light.top}%;--size:${light.size}px;--duration:${light.duration}s;--delay:${light.delay}s`} />
+          ))}
+        </div>
+        <div class="glass-bloom"></div>
+        <div class="rain-streaks">
+          {rainStreaks.map((drop) => (
+            <i style={`--x:${drop.left}%;--duration:${drop.duration}s;--delay:${drop.delay}s;--length:${drop.length}px;--width:${drop.width}px;--drift:${drop.drift}px`} />
+          ))}
+        </div>
+        <div class="glass-drops">
+          {glassDrops.map((drop) => (
+            <i style={`--x:${drop.left}%;--y:${drop.top}%;--size:${drop.size}px;--duration:${drop.duration}s;--delay:${drop.delay}s`} />
+          ))}
+        </div>
+        <div class="passing-reflection"></div>
+      </div>
+
+      <div class="lamp-pulse"></div>
+      <div class="room-shadow"></div>
+    </div>
+  </div>
+
+  <div class="lyric-stage" data-lyric-stage hidden aria-live="polite">
+    <p data-current-lyric></p>
+  </div>
+
+  <section class="player-console" aria-label="Reproductor de Siempre vuelves">
+    <div class="track-identity">
+      <p>Siempre vuelves</p>
+      <span>NODAM</span>
+    </div>
+
+    {
+      audioSrc ? (
+        <>
+          <div class="transport">
+            <button type="button" class="transport-button" data-seek-back aria-label="Retroceder 10 segundos">
+              <span aria-hidden="true">−10</span>
+            </button>
+            <button type="button" class="play-button" data-play aria-label="Reproducir Siempre vuelves">
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zm6 0h4v14h-4z" /></svg>
+            </button>
+            <button type="button" class="transport-button" data-seek-forward aria-label="Adelantar 10 segundos">
+              <span aria-hidden="true">+10</span>
+            </button>
+          </div>
+
+          <div class="timeline">
+            <output data-current-time aria-label="Tiempo transcurrido">0:00</output>
+            <input
+              data-progress
+              type="range"
+              min="0"
+              max={siempreVuelvesDuration}
+              step="0.01"
+              value="0"
+              aria-label="Posición de la canción"
+            />
+            <output data-duration aria-label="Duración total">4:02</output>
+          </div>
+
+          <div class="volume-control">
+            <button type="button" data-mute aria-label="Silenciar">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z" /></svg>
+            </button>
+            <input data-volume type="range" min="0" max="1" step="0.01" value="0.82" aria-label="Volumen" />
+          </div>
+        </>
+      ) : audioFallback ? (
+        <p class="audio-availability">{audioFallback}</p>
+      ) : null
+    }
+
+    <p class="player-status" data-player-status role="status" aria-live="polite"></p>
+  </section>
+
+  {
+    audioSrc && (
+      <audio data-audio preload="metadata" src={audioSrc}>
+        Tu navegador no puede reproducir este archivo de audio.
+      </audio>
+    )
+  }
+
+  {
+    audioSrc && (
+      <script
+        is:inline
+        type="application/json"
+        data-lyric-cues
+        set:html={JSON.stringify(siempreVuelvesLyrics)}
+      />
+    )
+  }
+</section>
+
+<script>
+  import "../../scripts/siempreVuelvesPlayer";
+</script>
+
+<style>
+  :global(html), :global(body) { background: #030509; }
+  :global(body) { overflow: hidden; }
+
+  .cinematic-player {
+    --ink: #030509;
+    --rain: #d8edf7;
+    --amber: #efad5f;
+    --paper: #f2ede7;
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+    isolation: isolate;
+  }
+
+  .player-nav {
+    position: absolute;
+    z-index: 30;
+    inset: clamp(1rem, 3vw, 2rem) var(--page-gutter) auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .player-nav a {
+    display: grid;
+    min-width: 4.5rem;
+    min-height: 2.75rem;
+    padding-inline: 0.75rem;
+    place-items: center;
+    border: 1px solid rgb(242 237 231 / 18%);
+    background: rgb(3 5 9 / 68%);
+    color: var(--paper);
+    font-weight: 750;
+    backdrop-filter: blur(8px);
+  }
+
+  .artwork-stage {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+  }
+
+  .artwork-canvas {
+    position: relative;
+    width: max(100vw, 100svh);
+    aspect-ratio: 1;
+    transform: scale(1);
+    transform-origin: 68% 24%;
+    transition: transform 2400ms cubic-bezier(0.2, 0.72, 0.18, 1);
+    isolation: isolate;
+    will-change: transform;
+  }
+
+  [data-engaged="true"] .artwork-canvas { transform: scale(2.08); }
+
+  .artwork { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  .window-atmosphere {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 38.5%;
+    width: 57.5%;
+    height: 47.5%;
+    overflow: hidden;
+    clip-path: polygon(3% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .city-lights, .glass-bloom, .rain-streaks, .glass-drops, .passing-reflection { position: absolute; inset: 0; }
+  .city-lights { mix-blend-mode: screen; }
+
+  .city-lights i {
+    position: absolute; top: var(--y); left: var(--x); width: var(--size); aspect-ratio: 1; border-radius: 50%;
+    background: var(--amber); box-shadow: 0 0 calc(var(--size) * 4) rgb(239 173 95 / 88%); opacity: 0.2;
+    animation: city-flicker var(--duration) ease-in-out var(--delay) infinite alternate;
+  }
+
+  .glass-bloom {
+    background: radial-gradient(circle at 50% 62%, rgb(82 132 171 / 18%), transparent 44%), linear-gradient(105deg, transparent 0 34%, rgb(174 211 232 / 10%) 48%, transparent 62%);
+    opacity: 0.55; animation: glass-breathe 6.5s ease-in-out infinite alternate;
+  }
+
+  .rain-streaks i {
+    position: absolute; top: -26%; left: var(--x); width: var(--width); height: var(--length); border-radius: 999px;
+    background: linear-gradient(to bottom, transparent, rgb(216 237 247 / 92%) 42%, rgb(137 184 211 / 56%) 76%, transparent);
+    filter: drop-shadow(0 0 2px rgb(182 220 240 / 46%)); opacity: 0; translate: 0 -120%;
+    animation: rain-fall var(--duration) linear var(--delay) infinite; will-change: translate, opacity;
+  }
+
+  .glass-drops i {
+    position: absolute; top: var(--y); left: var(--x); width: var(--size); height: calc(var(--size) * 1.7);
+    border: 1px solid rgb(224 242 250 / 52%); border-radius: 70% 45% 65% 50%;
+    background: linear-gradient(145deg, rgb(233 247 253 / 48%), rgb(80 125 151 / 12%));
+    box-shadow: inset 1px 1px 1px rgb(255 255 255 / 48%), 0 0 4px rgb(92 153 188 / 40%);
+    opacity: 0.5; animation: glass-drop var(--duration) ease-in var(--delay) infinite;
+  }
+
+  .passing-reflection { width: 28%; background: linear-gradient(102deg, transparent, rgb(204 230 242 / 22%), transparent); opacity: 0; translate: -180% 0; animation: reflection-pass 9s ease-in-out -2s infinite; }
+  .lamp-pulse { position: absolute; z-index: 2; inset: 0; background: radial-gradient(circle at 24.5% 42%, rgb(241 168 73 / 34%), transparent 17%); opacity: 0.48; animation: lamp-alive 5.8s ease-in-out infinite alternate; }
+  .room-shadow { position: absolute; z-index: 4; inset: 0; box-shadow: inset 0 0 clamp(5rem, 17vw, 16rem) rgb(0 0 0 / 48%); transition: opacity 1800ms ease; }
+  [data-engaged="true"] .room-shadow { opacity: 0.42; }
+
+  .player-console {
+    position: absolute;
+    z-index: 40;
+    right: var(--page-gutter);
+    bottom: clamp(1rem, 3vw, 2rem);
+    left: var(--page-gutter);
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.55fr) auto minmax(16rem, 1.8fr) minmax(8rem, 0.5fr);
+    gap: clamp(0.75rem, 2vw, 2rem);
+    align-items: center;
+    min-height: 5.5rem;
+    padding: 0.85rem clamp(0.9rem, 2vw, 1.5rem);
+    border: 1px solid rgb(242 237 231 / 20%);
+    background: linear-gradient(90deg, rgb(3 5 9 / 90%), rgb(9 17 24 / 76%));
+    box-shadow: 0 1.4rem 4rem rgb(0 0 0 / 34%);
+    backdrop-filter: blur(18px) saturate(118%);
+  }
+
+  .track-identity p { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.05; }
+  .track-identity span { color: rgb(242 237 231 / 62%); font-size: 0.75rem; letter-spacing: 0.12em; }
+  .transport, .timeline, .volume-control { display: flex; align-items: center; }
+  .transport { gap: 0.4rem; }
+
+  button { color: inherit; font: inherit; }
+  .transport button, .volume-control button { display: grid; flex: 0 0 auto; width: 2.75rem; height: 2.75rem; padding: 0; place-items: center; border: 1px solid rgb(242 237 231 / 20%); border-radius: 50%; background: rgb(255 255 255 / 6%); cursor: pointer; }
+  .play-button { width: 3.25rem !important; height: 3.25rem !important; border-color: rgb(242 237 231 / 66%) !important; background: var(--paper) !important; color: var(--ink); }
+  .play-button svg, .volume-control svg { width: 1.35rem; height: 1.35rem; fill: currentColor; }
+  .icon-pause { display: none; }
+  [data-audio-state="playing"] .icon-play { display: none; }
+  [data-audio-state="playing"] .icon-pause { display: block; }
+  .transport-button span { font-size: 0.72rem; font-weight: 750; }
+
+  .timeline { gap: 0.75rem; min-width: 0; }
+  .timeline output { min-width: 2.6rem; color: rgb(242 237 231 / 68%); font-variant-numeric: tabular-nums; font-size: 0.75rem; text-align: center; }
+  input[type="range"] { accent-color: var(--paper); cursor: pointer; }
+  .timeline input { width: 100%; min-width: 5rem; }
+  .volume-control { gap: 0.6rem; }
+  .volume-control input { width: 100%; min-width: 4rem; }
+  .player-status { position: absolute; right: 1rem; bottom: calc(100% + 0.5rem); max-width: 24rem; margin: 0; padding: 0.35rem 0.6rem; background: rgb(3 5 9 / 82%); color: #ffd1c5; font-size: 0.78rem; }
+  .player-status:empty { display: none; }
+  audio { display: none; }
+
+  .lyric-stage { position: absolute; z-index: 20; top: 18%; left: 50%; width: min(76vw, 50rem); translate: -50% 0; text-align: center; pointer-events: none; }
+  .lyric-stage p { margin: 0; color: var(--paper); font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.6rem, 5vw, 4rem); line-height: 1.05; text-shadow: 0 2px 18px #000, 0 0 50px #000; white-space: pre-line; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  @keyframes rain-fall { 0% { opacity: 0; translate: 0 -130%; } 8% { opacity: 0.82; } 78% { opacity: 0.58; } 100% { opacity: 0; translate: var(--drift) 590%; } }
+  @keyframes glass-drop { 0%,18% { opacity: 0.18; translate: 0 -2px; } 42% { opacity: 0.72; } 88%,100% { opacity: 0.24; translate: -1px 32px; } }
+  @keyframes city-flicker { from { opacity: 0.12; scale: 0.82; } to { opacity: 0.68; scale: 1.24; } }
+  @keyframes glass-breathe { from { opacity: 0.36; } to { opacity: 0.68; } }
+  @keyframes reflection-pass { 0%,17% { opacity: 0; translate: -180% 0; } 38% { opacity: 0.42; } 67%,100% { opacity: 0; translate: 480% 0; } }
+  @keyframes lamp-alive { from { opacity: 0.4; } to { opacity: 0.62; } }
+
+  [data-ambient-paused="true"] * { animation-play-state: paused !important; }
+  [data-motion-mode="reduced"] .city-lights i, [data-motion-mode="reduced"] .glass-bloom, [data-motion-mode="reduced"] .rain-streaks i, [data-motion-mode="reduced"] .glass-drops i, [data-motion-mode="reduced"] .passing-reflection, [data-motion-mode="reduced"] .lamp-pulse { animation: none; }
+  [data-motion-mode="reduced"] .rain-streaks, [data-motion-mode="reduced"] .glass-drops, [data-motion-mode="reduced"] .passing-reflection { display: none; }
+  [data-motion-mode="reduced"] .artwork-canvas, [data-motion-mode="reduced"] .room-shadow { transition: none; }
+
+  @media (max-width: 48rem) {
+    .artwork-canvas { width: max(100vw, 76svh); transform-origin: 67% 23%; }
+    [data-engaged="true"] .artwork-canvas { transform: scale(2.16); }
+    .player-console { grid-template-columns: 1fr auto; gap: 0.65rem 1rem; padding: 0.75rem; }
+    .track-identity { align-self: center; }
+    .transport { justify-self: end; }
+    .timeline { grid-column: 1 / -1; grid-row: 2; }
+    .volume-control { grid-column: 1 / -1; grid-row: 3; }
+    .volume-control input { max-width: 8rem; }
+  }
+
+  @media (max-width: 28rem) {
+    .transport-button { display: none !important; }
+    .player-console { bottom: 0.75rem; }
+    .player-nav { inset-block-start: 0.75rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-motion-mode="full"] .artwork-canvas { transition-duration: 2400ms !important; }
+    [data-motion-mode="full"] .room-shadow { transition-duration: 1800ms !important; }
+    [data-motion-mode="full"] .rain-streaks i, [data-motion-mode="full"] .glass-drops i, [data-motion-mode="full"] .city-lights i { animation-duration: var(--duration) !important; animation-iteration-count: infinite !important; }
+    [data-motion-mode="full"] .glass-bloom { animation-duration: 6.5s !important; animation-iteration-count: infinite !important; }
+    [data-motion-mode="full"] .passing-reflection { animation-duration: 9s !important; animation-iteration-count: infinite !important; }
+    [data-motion-mode="full"] .lamp-pulse { animation-duration: 5.8s !important; animation-iteration-count: infinite !important; }
+  }
+</style>

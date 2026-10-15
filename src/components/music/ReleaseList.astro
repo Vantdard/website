@@ -1,0 +1,40 @@
+---
+import type { Release } from "../../types/music";
+
+interface Props {
+  releases: readonly Release[];
+}
+
+const { releases } = Astro.props;
+---
+
+<ol class="release-list">
+  {
+    releases.map((release) => (
+      <li>
+        {release.universe && release.status !== "unannounced" ? (
+          <a href={`/music/${release.slug}`}>
+            <span>{release.title}</span>
+            <span class="release-meta">
+              {release.type ?? "Lanzamiento"}
+              {release.releaseDate && <> · <time datetime={release.releaseDate}>{release.releaseDate.slice(0, 4)}</time></>}
+            </span>
+          </a>
+        ) : (
+          <div class="release-entry">
+            <span>{release.title}</span>
+            <span class="release-meta">Detalles por anunciar</span>
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .release-list { margin: var(--space-7) 0 0; padding: 0; list-style: none; }
+  li { border-block-start: var(--border-width) solid var(--color-border); }
+  li:last-child { border-block-end: var(--border-width) solid var(--color-border); }
+  a, .release-entry { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); align-items: center; justify-content: space-between; min-height: 5.5rem; padding-block: var(--space-4); font-size: var(--text-xl); font-weight: 750; text-decoration: none; }
+  .release-meta { color: var(--color-foreground-muted); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+</style>

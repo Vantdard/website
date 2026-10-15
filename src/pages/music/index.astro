@@ -1,0 +1,10 @@
+---
+import { releases } from "../../data/releases";
+import ReleaseList from "../../components/music/ReleaseList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Música | NODAM" description="Lanzamientos musicales de NODAM." canonicalPath="/music">
+  <header class="section page-header"><div class="container"><p class="eyebrow">NODAM</p><h1>Música</h1><p class="lede">Cada lanzamiento puede abrir un universo visual distinto.</p></div></header>
+  <section class="section" aria-labelledby="releases-title"><div class="container"><h2 id="releases-title">Lanzamientos</h2><ReleaseList releases={releases} /></div></section>
+</BaseLayout>
+<style>.page-header{border-block-end:var(--border-width) solid var(--color-border)}</style>

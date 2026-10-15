@@ -1,0 +1,48 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getImage } from "astro:assets";
+import siempreVuelvesCover from "../../assets/music/siempre-vuelves/cover.jpg";
+import SiempreVuelvesSpatialPlayer from "../../components/music/SiempreVuelvesSpatialPlayer.astro";
+import { releases } from "../../data/releases";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { Release, ReleaseUniverse } from "../../types/music";
+export const getStaticPaths = (() => releases.flatMap((release) => release.universe ? [{ params: { slug: release.slug }, props: { release } }] : [])) satisfies GetStaticPaths;
+interface Props { release: Release & { universe: ReleaseUniverse }; }
+const { release } = Astro.props;
+const formattedDate = release.releaseDate
+  ? new Intl.DateTimeFormat("es", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${release.releaseDate}T00:00:00Z`))
+  : null;
+const isSiempreVuelves = release.slug === "siempre-vuelves";
+const socialArtwork = isSiempreVuelves
+  ? await getImage({ src: siempreVuelvesCover, width: 1200, height: 1200, fit: "cover", format: "jpg", quality: 86 })
+  : undefined;
+const description = release.releaseDate && formattedDate
+  ? `${release.title}, lanzamiento de NODAM anunciado para el ${formattedDate}.`
+  : `${release.title}, lanzamiento de NODAM.`;
+---
+<BaseLayout
+  title={`${release.title} | NODAM`}
+  description={description}
+  canonicalPath={`/music/${release.slug}`}
+  ogType="music.song"
+  ogImage={socialArtwork?.src}
+  ogImageAlt={isSiempreVuelves ? "Portada oficial de Siempre vuelves de NODAM" : undefined}
+  immersive={isSiempreVuelves}
+>
+  {
+    isSiempreVuelves ? (
+      <SiempreVuelvesSpatialPlayer
+        audioFallback={formattedDate ? `Estreno: ${formattedDate}` : undefined}
+      />
+    ) : (
+      <article class="release" style={`--release-background:${release.universe.theme.background};--release-foreground:${release.universe.theme.foreground};--release-accent:${release.universe.theme.accent};--release-muted:${release.universe.theme.muted}`}>
+        <header class="container release__header">
+          <p class="eyebrow">{release.type ?? "Lanzamiento"} · {release.status === "announced" ? "Anunciado" : "Publicado"}</p>
+          <h1>{release.title}</h1>
+          {release.releaseDate && formattedDate && <p class="release__date"><time datetime={release.releaseDate}>{formattedDate}</time></p>}
+        </header>
+      </article>
+    )
+  }
+</BaseLayout>
+<style>.release{min-height:72vh;padding-block:var(--section-space);background:var(--release-background);color:var(--release-foreground)}.release__header{display:grid;align-content:center;min-height:50vh}.release .eyebrow{color:var(--release-accent)}.release h1{max-width:12ch;font-size:var(--text-display)}.release__date{margin:0;color:var(--release-muted);font-size:var(--text-lg)}</style>

@@ -1,6 +1,6 @@
-import type { NavigationItem } from "../types/content";
+import type { NavigationItem } from "../types/site";
 
 export const primaryNavigation = [
-  { label: "Products", href: "/products" },
-  { label: "About", href: "/about" },
+  { label: "Inicio", href: "/" },
+  { label: "Música", href: "/music" },
 ] as const satisfies readonly NavigationItem[];

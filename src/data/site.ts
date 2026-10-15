@@ -1,17 +1,11 @@
-import type { SiteConfig } from "../types/content";
+import type { SiteConfig } from "../types/site";
 
 export const site = {
-  name: "Vantdard",
+  name: "NODAM",
   origin: "https://vantdard.com",
-  language: "en",
+  language: "es",
   description:
-    "Vantdard develops high-quality products across different domains, guided by clarity, reliability and a commitment to building them well.",
-  supportEmail: "hello@vantdard.com",
-  socialLinks: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/company/vantdard" },
-    { label: "X", href: "https://x.com/vantdard" },
-    { label: "DEV.to", href: "https://dev.to/vantdard" },
-    { label: "Hashnode", href: "https://vantdard.hashnode.dev" },
-    { label: "GitHub", href: "https://github.com/Vantdard" },
-  ],
+    "NODAM es un artista musical. Cada lanzamiento abre un universo sonoro y visual propio.",
+  contactEmail: null,
+  socialLinks: [],
 } satisfies SiteConfig;
